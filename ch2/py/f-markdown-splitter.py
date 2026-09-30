@@ -10,6 +10,9 @@ Ch2-f: Markdown 分割器
 - 按代码块（```）分割
 - 保持文档结构的完整性
 """
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # ============ 导入 ============
 from langchain_text_splitters import (

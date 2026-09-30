@@ -13,6 +13,9 @@ pip install pypdf
 - 每一页会变成一个独立的 Document
 - metadata 中会包含页码信息
 """
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # ============ 导入 ============
 from langchain_community.document_loaders import PyPDFLoader

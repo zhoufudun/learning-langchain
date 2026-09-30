@@ -13,6 +13,11 @@ Ch1-e: PromptTemplate + Model（模板 + 模型调用）
 """
 
 # ============ 导入 ============
+
+from dotenv import load_dotenv
+
+load_dotenv()  # 加载.env
+
 from langchain_openai.chat_models import ChatOpenAI
 from langchain_core.prompts import PromptTemplate
 
@@ -29,7 +34,7 @@ Question: {question}
 Answer: """)
 
 # 模型：指定使用哪个 LLM
-model = ChatOpenAI(model="gpt-3.5-turbo")
+model = ChatOpenAI(model="deepseek-chat")
 
 # ============ 单次使用 ============
 # 下面是使用模板和模型的一次调用
@@ -45,5 +50,7 @@ prompt = template.invoke(
 # 第二步：把提示词传给模型，获取回答
 response = model.invoke(prompt)
 
+resp = model.invoke(prompt)
+
 # 打印模型的回答（AIMessage 对象）
-print(response)
+print(resp)

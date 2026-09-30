@@ -18,6 +18,9 @@ Ch2-j: 记录管理器（防止重复索引）
 - "incremental": 增量更新，保留旧的，只添加新的/更新变化的
 - "full": 全量更新，删除所有旧的，插入所有新的
 """
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # ============ 导入 ============
 from langchain.indexes import SQLRecordManager, index

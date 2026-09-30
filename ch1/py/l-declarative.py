@@ -18,6 +18,9 @@ Ch1-l: 声明式编程（用 | 管道符连接组件）
 - 几乎所有 LangChain 应用都用 | 来组装组件
 - 组件可以是：PromptTemplate、Model、OutputParser、Retriever 等
 """
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # ============ 导入 ============
 from langchain_openai.chat_models import ChatOpenAI

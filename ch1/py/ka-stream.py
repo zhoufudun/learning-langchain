@@ -15,6 +15,9 @@ Ch1-ka: 流式输出（打字机效果）
 - 不用等完整回答，边生成边显示
 - 用户体验更好（像 ChatGPT 的打字效果）
 """
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # ============ 导入 ============
 from langchain_core.runnables import chain

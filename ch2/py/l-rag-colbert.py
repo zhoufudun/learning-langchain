@@ -22,6 +22,9 @@ pip install -U ragatouille transformers
 - next(iter(...)): 获取迭代器的第一个元素
 - requests.get(): 发送 HTTP GET 请求
 """
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # ============ 导入 ============
 from ragatouille import RAGPretrainedModel

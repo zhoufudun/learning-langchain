@@ -20,6 +20,9 @@ Ch1-kb: 异步编程（async/await）
 - 普通函数不能直接调用异步函数
 - 需要用 asyncio.run() 来启动异步代码
 """
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # ============ 导入 ============
 from langchain_core.runnables import chain

@@ -14,6 +14,9 @@ Ch2-a: 文本文件加载器
 - './test.txt': 相对路径，表示当前目录下的 test.txt 文件
 - encoding="utf-8": 指定文件编码，中文文件一般用 utf-8
 """
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # ============ 导入 ============
 # TextLoader 来自 langchain_community 包

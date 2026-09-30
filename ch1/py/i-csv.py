@@ -16,6 +16,9 @@ Ch1-i: 输出解析器（把字符串解析成列表）
 """
 
 # ============ 导入 ============
+from dotenv import load_dotenv
+load_dotenv()
+
 # CommaSeparatedListOutputParser: 逗号分隔列表解析器
 from langchain_core.output_parsers import CommaSeparatedListOutputParser
 

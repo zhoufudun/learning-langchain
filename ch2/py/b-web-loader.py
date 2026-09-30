@@ -13,6 +13,9 @@ pip install beautifulsoup4
 - 底层使用 BeautifulSoup 解析 HTML
 - 会自动提取网页的文本内容，去掉 HTML 标签
 """
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # ============ 导入 ============
 from langchain_community.document_loaders import WebBaseLoader

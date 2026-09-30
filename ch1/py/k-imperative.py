@@ -14,6 +14,9 @@ Ch1-k: 命令式编程（用 @chain 装饰器）
 - 命令式：一步步写代码，像写菜谱（先做这个，再做那个）
 - 声明式：用 | 管道符连接组件（见 l-declarative.py）
 """
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # ============ 导入 ============
 from langchain_openai.chat_models import ChatOpenAI

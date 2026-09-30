@@ -18,6 +18,9 @@ Ch2-d: 递归字符文本分割器
 【Python 语法】
 - 方法链: loader.load() 返回的结果可以直接传给下一个方法
 """
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # ============ 导入 ============
 from langchain_text_splitters import RecursiveCharacterTextSplitter

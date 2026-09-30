@@ -18,6 +18,9 @@ Ch2-g: 文本嵌入（Embeddings）
 【Python 语法】
 - 列表推导式: [x for x in items] 遍历并生成新列表
 """
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # ============ 导入 ============
 from langchain_openai import OpenAIEmbeddings

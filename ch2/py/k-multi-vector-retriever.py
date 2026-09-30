@@ -25,6 +25,9 @@ Ch2-k: 多向量检索器（用摘要检索，返回原文）
 - enumerate(): 遍历时同时获取索引和元素
 - zip(): 把两个列表配对
 """
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # ============ 导入 ============
 from langchain_community.document_loaders import TextLoader

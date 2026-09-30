@@ -11,7 +11,8 @@ ChatPromptTemplate  →  invoke({变量})  →  消息列表  →  model.invoke(
 # ============ 导入 ============
 from langchain_openai.chat_models import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
-
+from dotenv import load_dotenv
+load_dotenv()
 # ============ 可复用的组件 ============
 
 # 聊天模板：定义对话结构
@@ -27,7 +28,7 @@ template = ChatPromptTemplate.from_messages(
 )
 
 # 模型
-model = ChatOpenAI()
+model = ChatOpenAI(model="deepseek-chat")
 
 # ============ 单次调用 ============
 

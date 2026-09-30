@@ -17,6 +17,9 @@ Ch1-f: ChatPromptTemplate 聊天提示词模板
 - [(元组1), (元组2)]: 元组的列表
 """
 
+from dotenv import load_dotenv
+
+load_dotenv()  # 加载.env
 # ============ 导入 ============
 from langchain_core.prompts import ChatPromptTemplate
 

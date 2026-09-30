@@ -15,6 +15,9 @@ Ch2-h: 完整流程：加载 → 分割 → 嵌入
   for chunk in chunks:
       result.append(chunk.page_content)
 """
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # ============ 导入 ============
 from langchain_community.document_loaders import TextLoader

@@ -14,6 +14,9 @@ Ch2-e: 代码分割器（按编程语言语法分割）
 Language.PYTHON, Language.JS, Language.JAVA, Language.GO,
 Language.MARKDOWN, Language.HTML, Language.CSS 等
 """
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # ============ 导入 ============
 from langchain_text_splitters import (

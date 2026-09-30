@@ -10,15 +10,20 @@ Ch1-j: 三种调用方式（invoke / batch / stream）
 - for token in ...: for 循环遍历
 - yield: 生成器，stream() 会逐个产出 token
 """
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # ============ 导入 ============
 from langchain_openai.chat_models import ChatOpenAI
 
-model = ChatOpenAI(model="gpt-3.5-turbo")
+model = ChatOpenAI(model="deepseek-chat")
 
 # ============ 方式一：invoke() 单个调用 ============
 # 最常用，传入一个问题，等待完整回答
 completion = model.invoke("Hi there!")
+invoke = model.invoke("hello!")
+print(f"result: {invoke}")
 print("invoke 结果:", completion.content)
 # 输出完整的回答，如 "Hi!"
 
@@ -27,6 +32,9 @@ print("invoke 结果:", completion.content)
 # 适合需要批量处理的场景
 completions = model.batch(["Hi there!", "Bye!"])
 print("batch 结果:", [c.content for c in completions])
+
+batch = model.batch(["hello", "1+1等于多少？"])
+print(f"batch result: {batch}")
 # 输出: ['Hi!', 'See you!']
 
 # ============ 方式三：stream() 流式调用 ============
@@ -38,3 +46,7 @@ for token in model.stream("Bye!"):
     print(token.content, end="")  # end="" 让输出不换行
     # 输出效果: G o o d b y e !
 print()  # 最后换行
+
+for token in model.stream("解释相对论"):
+    print(token.content, end="")# end="" 让输出不换行
+

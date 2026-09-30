@@ -27,6 +27,9 @@ docker run \\
 - uuid.uuid4(): 生成全局唯一 ID
 - str(): 把对象转换成字符串
 """
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # ============ 导入 ============
 from langchain_community.document_loaders import TextLoader
