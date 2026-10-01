@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 """
 Ch7-d: Supervisor 模式（监督者协调多个 Agent）
 
@@ -156,6 +158,7 @@ print("任务: 分析数据并创建可视化")
 print()
 
 for output in graph.stream(initial_state):
-    print(f"\n决策: {output.get('next', 'N/A')}")
+    print(f"
+决策: {output.get('next', 'N/A')}")
     if output.get("messages"):
         print(f"回复: {output['messages'][-1].content[:100]}...")

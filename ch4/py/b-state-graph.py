@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 """
 Ch4-b: 状态图（StateGraph）- LangGraph 基础
 

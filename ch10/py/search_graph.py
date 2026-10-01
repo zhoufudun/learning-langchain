@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 from typing import List, TypedDict
 
 from langchain_core.documents import Document
@@ -20,14 +22,18 @@ llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
 rag_chain = prompt | llm | StrOutputParser()
 
 # Prompt
-system = """You a question re-writer that converts an input question to a better version that is optimized \n 
+system = """You a question re-writer that converts an input question to a better version that is optimized 
+ 
      for web search. Look at the input and try to reason about the underlying semantic intent / meaning."""
 re_write_prompt = ChatPromptTemplate.from_messages(
     [
         ("system", system),
         (
             "human",
-            "Here is the initial question: \n\n {question} \n Formulate an improved question.",
+            "Here is the initial question: 
+
+ {question} 
+ Formulate an improved question.",
         ),
     ]
 )
@@ -159,7 +165,8 @@ def web_search(state):
 
     # Web search
     docs = web_search_tool.invoke({"query": question})
-    web_results = "\n".join([d["content"] for d in docs])
+    web_results = "
+".join([d["content"] for d in docs])
     web_results = Document(page_content=web_results)
     documents.append(web_results)
 

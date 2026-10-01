@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 """
 Ch3-a: 基础 RAG（检索增强生成）
 
@@ -73,11 +75,14 @@ llm_chain = prompt | llm
 # ============ 第五步：生成回答 ============
 # 把检索到的文档和问题传给 LLM
 result = llm_chain.invoke({"context": docs, "question": query})
-print("\n回答:", result.content)
+print("
+回答:", result.content)
 
-print("\n" + "="*50)
+print("
+" + "="*50)
 print("使用 @chain 封装完整流程")
-print("="*50 + "\n")
+print("="*50 + "
+")
 
 
 # ============ 封装成完整的 QA 链 ============

@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 """
 Ch4-a: 简单记忆（手动传递历史消息）
 

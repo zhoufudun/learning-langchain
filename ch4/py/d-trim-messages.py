@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 """
 Ch4-d: 消息裁剪（控制上下文长度）
 
@@ -58,7 +60,8 @@ trimmer = trim_messages(
 # ============ 应用裁剪 ============
 trimmed = trimmer.invoke(messages)
 print(f"裁剪后消息数: {len(trimmed)}")
-print("\n裁剪后的消息:")
+print("
+裁剪后的消息:")
 for msg in trimmed:
     print(f"  {msg.__class__.__name__}: {msg.content}")
 

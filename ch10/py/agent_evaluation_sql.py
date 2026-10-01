@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 from agent_sql_graph import builder
 from langchain import hub
 from langchain_openai import ChatOpenAI

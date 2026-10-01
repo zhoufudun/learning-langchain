@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 """
 Ch8-d: 授权/人工确认（Human-in-the-Loop）
 

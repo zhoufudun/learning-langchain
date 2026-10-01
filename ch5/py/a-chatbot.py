@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 """
 Ch5-a: 基础聊天机器人（LangGraph 版）
 

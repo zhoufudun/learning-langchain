@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 """
 Ch3-b: 查询重写（Query Rewriting）
 
@@ -66,11 +68,14 @@ def qa(input):
 
 
 result = qa.invoke(query)
-print("\n不重写的回答:", result.content)
+print("
+不重写的回答:", result.content)
 
-print("\n" + "="*50)
+print("
+" + "="*50)
 print("使用查询重写")
-print("="*50 + "\n")
+print("="*50 + "
+")
 
 # ============ 查询重写 ============
 # 重写提示词：让 LLM 提取核心问题

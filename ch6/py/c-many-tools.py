@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 """
 Ch6-c: 动态工具选择（工具太多时）
 

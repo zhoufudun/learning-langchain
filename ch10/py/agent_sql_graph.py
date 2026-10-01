@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 from langgraph.checkpoint.sqlite import SqliteSaver
 from langgraph.graph import END, StateGraph
 from langgraph.prebuilt import ToolNode, tools_condition
@@ -107,7 +109,8 @@ def handle_tool_error(state) -> dict:
     return {
         "messages": [
             ToolMessage(
-                content=f"Error: {repr(error)}\n please fix your mistakes.",
+                content=f"Error: {repr(error)}
+ please fix your mistakes.",
                 tool_call_id=tc["id"],
             )
             for tc in tool_calls

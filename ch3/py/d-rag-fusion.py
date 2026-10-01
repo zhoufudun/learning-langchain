@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 """
 Ch3-d: RAG Fusion（融合排序）
 
@@ -48,11 +50,14 @@ retriever = db.as_retriever(search_kwargs={"k": 5})
 
 # ============ 查询生成 ============
 prompt_rag_fusion = ChatPromptTemplate.from_template(
-    """You are a helpful assistant that generates multiple search queries based on a single input query. \n Generate multiple search queries related to: {question} \n Output (4 queries):""")
+    """You are a helpful assistant that generates multiple search queries based on a single input query. 
+ Generate multiple search queries related to: {question} 
+ Output (4 queries):""")
 
 
 def parse_queries_output(message):
-    return message.content.split('\n')
+    return message.content.split('
+')
 
 
 llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
@@ -116,7 +121,8 @@ def reciprocal_rank_fusion(results: list[list], k=60):
 retrieval_chain = query_gen | retriever.batch | reciprocal_rank_fusion
 
 result = retrieval_chain.invoke(query)
-print("\n融合排序后的第一个文档:")
+print("
+融合排序后的第一个文档:")
 print(result[0].page_content[:200] + "...")
 
 # ============ RAG Fusion QA ============
@@ -136,6 +142,7 @@ def rag_fusion(input):
     return answer
 
 
-print("\n运行 RAG Fusion")
+print("
+运行 RAG Fusion")
 result = rag_fusion.invoke(query)
 print(result.content)

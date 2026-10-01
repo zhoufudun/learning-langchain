@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 """
 Ch6-a: 基础 Agent（带工具的智能体）
 

@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 """
 Ch8-g: 分叉/回溯（Fork / Time Travel）
 

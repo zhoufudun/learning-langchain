@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 """
 Ch5-b: SQL 生成器（多节点图）
 
@@ -119,5 +121,6 @@ graph = builder.compile()
 result = graph.invoke({"user_query": "What is the total sales for each product?"})
 print("SQL 查询:")
 print(result["sql_query"])
-print("\nSQL 解释:")
+print("
+SQL 解释:")
 print(result["sql_explanation"])

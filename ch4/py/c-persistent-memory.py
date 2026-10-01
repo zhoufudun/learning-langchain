@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 """
 Ch4-c: 持久化记忆（跨请求保持对话）
 
@@ -76,5 +78,6 @@ print("第二次:", result_2["messages"][-1].content)
 # ============ 查看完整状态 ============
 # get_state() 获取指定线程的当前状态
 state = graph.get_state(thread1)
-print("\n完整状态:")
+print("
+完整状态:")
 print(f"消息数量: {len(state.values['messages'])}")

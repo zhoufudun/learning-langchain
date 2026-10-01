@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 """
 Ch5-c: 多 RAG 聊天机器人（条件路由）
 

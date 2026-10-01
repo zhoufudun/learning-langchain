@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 from langsmith import wrappers, Client
 from pydantic import BaseModel, Field
 from openai import OpenAI
@@ -40,4 +42,5 @@ dataset = client.create_dataset(
 client.create_examples(inputs=inputs, outputs=outputs, dataset_id=dataset.id)
 
 print(
-    f"Dataset created in langsmith with ID: {dataset.id}\n Navigate to {dataset.url}.")
+    f"Dataset created in langsmith with ID: {dataset.id}
+ Navigate to {dataset.url}.")

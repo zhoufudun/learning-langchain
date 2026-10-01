@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 from typing import List, TypedDict
 from langchain_community.document_loaders import WebBaseLoader
 from langchain.schema import Document

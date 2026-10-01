@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 """
 Ch4-f: 消息合并（合并连续的同类型消息）
 
@@ -55,9 +57,11 @@ print(f"合并前消息数: {len(messages)}")
 merged = merge_message_runs(messages)
 print(f"合并后消息数: {len(merged)}")  # 6 → 3
 
-print("\n合并后的消息:")
+print("
+合并后的消息:")
 for msg in merged:
-    print(f"\n{msg.__class__.__name__}:")
+    print(f"
+{msg.__class__.__name__}:")
     print(f"  {msg.content}")
 
 # 输出:

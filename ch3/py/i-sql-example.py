@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 """
 Ch3-i: SQL 查询（Text-to-SQL）
 

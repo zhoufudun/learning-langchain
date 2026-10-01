@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 """
 Ch7-a: 反思模式（Reflection）
 
@@ -138,4 +140,5 @@ print()
 for output in graph.stream(initial_state):
     message_type = "generate" if "generate" in output else "reflect"
     content = output[message_type]["messages"][-1].content
-    print(f"\n[{message_type.upper()}] {content[:100]}...")
+    print(f"
+[{message_type.upper()}] {content[:100]}...")

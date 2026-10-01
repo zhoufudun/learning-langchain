@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 """
 Ch3-c: 多查询检索（Multi-Query Retrieval）
 
@@ -17,7 +19,7 @@ Ch3-c: 多查询检索（Multi-Query Retrieval）
 - 变体3: "语言模型的发展历史？"
 
 【Python 语法】
-- split('\\n'): 按换行符分割字符串
+- split('\n'): 按换行符分割字符串
 - {doc.page_content: doc for ...}: 字典推导式，用于去重
 - for sublist in document_lists for doc in sublist: 嵌套列表展开
 """
@@ -62,10 +64,11 @@ def parse_queries_output(message):
     解析 LLM 输出，按换行符分割成多个查询
 
     【Python 语法】
-    - split('\\n'): 按换行符分割
+    - split('\n'): 按换行符分割
     - 返回字符串列表: ['查询1', '查询2', ...]
     """
-    return message.content.split('\n')
+    return message.content.split('
+')
 
 
 # 查询生成链
@@ -121,6 +124,7 @@ def multi_query_qa(input):
 
 
 # 运行
-print("运行多查询 QA\n")
+print("运行多查询 QA
+")
 result = multi_query_qa.invoke(query)
 print(result.content)

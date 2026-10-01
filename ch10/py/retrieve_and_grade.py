@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import WebBaseLoader
 from langchain_community.vectorstores import InMemoryVectorStore
@@ -34,7 +36,8 @@ retriever = vectorstore.as_retriever()
 results = retriever.invoke(
     "What are 2 LangGraph agents used in production in 2024?")
 
-print("Results: \n", results)
+print("Results: 
+", results)
 
 
 # --- Create a grader for retrieved documents ---
@@ -61,7 +64,11 @@ grade_prompt = ChatPromptTemplate.from_messages(
     [
         ("system", system),
         ("human",
-         "Retrieved document: \n\n {document} \n\n User question: {question}"),
+         "Retrieved document: 
+
+ {document} 
+
+ User question: {question}"),
     ]
 )
 
@@ -78,4 +85,7 @@ doc_txt = docs[0].page_content
 
 result = retrieval_grader.invoke({"question": question, "document": doc_txt})
 
-print("\n\nGrade Result: \n", result)
+print("
+
+Grade Result: 
+", result)

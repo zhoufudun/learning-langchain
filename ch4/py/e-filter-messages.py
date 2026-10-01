@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 """
 Ch4-e: 消息过滤（按条件筛选消息）
 
@@ -55,7 +57,8 @@ excluded_names = filter_messages(
     messages,
     exclude_names=["example_user", "example_assistant"]
 )
-print("\n排除示例消息:")
+print("
+排除示例消息:")
 for msg in excluded_names:
     print(f"  {msg.__class__.__name__}: {msg.content}")
 # 输出: system + bob + alice 的消息
@@ -67,6 +70,7 @@ filtered_messages = filter_messages(
     include_types=["human", "ai"],  # 只要 human 和 ai
     exclude_ids=["3"]                # 排除 id="3" 的消息
 )
-print("\n组合过滤 (human+ai, 排除 id=3):")
+print("
+组合过滤 (human+ai, 排除 id=3):")
 for msg in filtered_messages:
     print(f"  [{msg.id}] {msg.__class__.__name__}: {msg.content}")

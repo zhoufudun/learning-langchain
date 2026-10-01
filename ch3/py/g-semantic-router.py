@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 """
 Ch3-g: 语义路由（Semantic Router）
 
@@ -81,5 +83,6 @@ semantic_router = prompt_router | ChatOpenAI() | StrOutputParser()
 
 # ============ 测试 ============
 result = semantic_router.invoke("What's a black hole")
-print("\n语义路由结果:", result)
+print("
+语义路由结果:", result)
 # 会自动选择 physics_template，因为"黑洞"和物理模板更相似

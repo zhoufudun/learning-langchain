@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 """
 Ch3-e: HyDE（假设文档嵌入）
 
@@ -47,7 +49,9 @@ retriever = db.as_retriever(search_kwargs={"k": 5})
 # ============ HyDE: 生成假设文档 ============
 # 提示词：让 LLM 写一段回答问题的文章
 prompt_hyde = ChatPromptTemplate.from_template(
-    """Please write a passage to answer the question.\n Question: {question} \n Passage:""")
+    """Please write a passage to answer the question.
+ Question: {question} 
+ Passage:""")
 
 # 假设文档生成链
 # StrOutputParser() 把 AIMessage 转换成纯字符串
@@ -91,5 +95,6 @@ def qa(input):
 
 print("运行 HyDE")
 result = qa.invoke(query)
-print("\n回答:")
+print("
+回答:")
 print(result.content)
