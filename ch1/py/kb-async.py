@@ -24,10 +24,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-# ============ 导入 ============
+# ============ 导入 ===========
 from langchain_core.runnables import chain
 from langchain_openai.chat_models import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
+import asyncio
 
 # ============ 准备组件 ============
 template = ChatPromptTemplate.from_messages(
@@ -37,34 +38,34 @@ template = ChatPromptTemplate.from_messages(
     ]
 )
 
-model = ChatOpenAI(model="gpt-3.5-turbo")
+model = ChatOpenAI(model="deepseek-chat")
 
 
-# ============ 异步 chatbot ============
+# ============ 异步 mybot ============
 @chain
-async def chatbot(values):
+async def mybot(values):
     """
-    async def: 定义异步函数
-    await: 等待异步操作完成
+    async def :定义异步函数
+    await :等待异步操作完成
 
-    ainvoke() 是 invoke() 的异步版本
+    ainvoke() 是 invoke（）的异步版本
     """
     # await template.ainvoke(): 异步填充模板
     prompt = await template.ainvoke(values)
     # await model.ainvoke(): 异步调用模型
     return await model.ainvoke(prompt)
 
-
 # ============ 主函数 ============
-async def main():
-    """异步主函数"""
-    # 异步调用 chatbot
-    return await chatbot.ainvoke({"question": "Which model providers offer LLMs?"})
-
+async def my_main():
+    """
+    异步主函数
+    """
+    # 异步调用 mybot
+    return await mybot.ainvoke({"question": "1+2=?"})
 
 # ============ 运行 ============
 # __name__ == "__main__" 确保只在直接运行时执行（不是被导入时）
 if __name__ == "__main__":
-    import asyncio
+    # import asyncio
     # asyncio.run() 是运行异步代码的入口
-    print(asyncio.run(main()))
+    print(asyncio.run(my_main()))

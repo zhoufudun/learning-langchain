@@ -33,23 +33,25 @@ template = ChatPromptTemplate.from_messages(
     ]
 )
 
+chat_prompt_template = ChatPromptTemplate.from_messages([("system", "你是一个ai助手"), ("human", "{question}")])
+
 # 模型
-model = ChatOpenAI(model="gpt-3.5-turbo")
+model = ChatOpenAI(model="deepseek-chat")
 
 
 # ============ 用 @chain 定义流程 ============
-@chain  # 这个装饰器让 chatbot 函数变成 Runnable 对象
-def chatbot(values):
+@chain
+def chatbot2(values):
     """
     values: 字典，包含 {question: "问题内容"}
     """
     # 第一步：用模板生成提示词
-    prompt = template.invoke(values)
+    prompt = chat_prompt_template.invoke(values)
     # 第二步：用模型生成回答
     return model.invoke(prompt)
 
 
 # ============ 使用 ============
 # 因为有 @chain 装饰器，chatbot 现在有了 invoke() 方法
-response = chatbot.invoke({"question": "Which model providers offer LLMs?"})
+response = chatbot2.invoke({"question": "Which model providers offer LLMs?"})
 print(response.content)

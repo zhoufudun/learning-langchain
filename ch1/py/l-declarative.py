@@ -26,32 +26,30 @@ load_dotenv()
 from langchain_openai.chat_models import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_openai.chat_models import ChatOpenAI
+
 # ============ 准备组件 ============
 # 模板
-template = ChatPromptTemplate.from_messages(
-    [
-        ("system", "You are a helpful assistant."),
-        ("human", "{question}"),
-    ]
-)
+messages = ChatPromptTemplate.from_messages([("system", "You are a helpful assistant."), ("human", "{question}"), ])
 
 # 模型
-model = ChatOpenAI()
+model = ChatOpenAI(model="deepseek-chat")
 
 # ============ 用 | 连接组件 ============
 # 这一行是 LangChain 的核心！
 # template | model 创建一个"链"
 # 输入 → template（生成提示词）→ model（生成回答）→ 输出
-chatbot = template | model
+chatbot = messages | model
 
 # ============ 使用链 ============
 # invoke(): 同步调用
-response = chatbot.invoke({"question": "Which model providers offer LLMs?"})
+response = chatbot.invoke({"question": "1+1=?"})
 print(response.content)
 
 # ============ 流式输出 ============
 # stream(): 流式调用，同样可以用
 print("\n--- 流式输出 ---")
-for part in chatbot.stream({"question": "Which model providers offer LLMs?"}):
+for streamResult in chatbot.stream({"question","1+1=?"}):
     # part 是 AIMessageChunk
-    print(part.content, end="")
+    print(streamResult.content, end="")

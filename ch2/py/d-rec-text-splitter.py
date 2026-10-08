@@ -27,11 +27,11 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import TextLoader
 
 # ============ 第一步：加载文档 ============
-loader = TextLoader('./test.txt', encoding="utf-8")
-docs = loader.load()  # docs 是 Document 列表
+text_loader = TextLoader('../.././test2.txt', encoding="utf-8")
+docs = text_loader.load()  # docs 是 Document 列表
 
 # ============ 第二步：创建分割器 ============
-splitter = RecursiveCharacterTextSplitter(
+text_splitter = RecursiveCharacterTextSplitter(
     chunk_size=1000,    # 每块最多 1000 个字符
     chunk_overlap=200   # 相邻块重叠 200 个字符
 )
@@ -40,9 +40,10 @@ splitter = RecursiveCharacterTextSplitter(
 
 # ============ 第三步：分割文档 ============
 # split_documents() 接收 Document 列表，返回分割后的 Document 列表
-splitted_docs = splitter.split_documents(docs)
+splitted_docs = text_splitter.split_documents(docs)
 
 # ============ 查看结果 ============
 # 原来 1 个大文档 → 分割成多个小文档
 print(f"原文档数: {len(docs)}, 分割后: {len(splitted_docs)}")
-print(splitted_docs)
+for doc in splitted_docs:
+    print(doc, end="\n\n")

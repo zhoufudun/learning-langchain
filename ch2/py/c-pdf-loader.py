@@ -22,16 +22,20 @@ from langchain_community.document_loaders import PyPDFLoader
 
 # ============ 创建加载器 ============
 # 传入 PDF 文件路径
-loader = PyPDFLoader('./test.pdf')
+pdf_loader = PyPDFLoader('../../test.pdf')
 
 # ============ 加载文档 ============
 # load() 返回的列表，每个元素是 PDF 的一页
 # pages[0] 是第一页，pages[1] 是第二页...
-pages = loader.load()
+pages = pdf_loader.load()
 
 # ============ 查看结果 ============
 # 每个 Document 的 metadata 包含:
 #   - source: 文件路径
 #   - page: 页码（从 0 开始）
-print(pages)
+# 打印序号
+for page in pages:
+    print(page.metadata.keys())
+    print("   ")
+    print(page.page_content)
 # 例如: [Document(page_content='第一页内容', metadata={'source': './test.pdf', 'page': 0}), ...]

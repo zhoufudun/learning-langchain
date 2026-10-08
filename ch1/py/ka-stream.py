@@ -25,19 +25,18 @@ from langchain_openai.chat_models import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 
 # ============ 准备组件 ============
-model = ChatOpenAI(model="gpt-3.5-turbo")
+model = ChatOpenAI(model="deepseek-chat")
 
 template = ChatPromptTemplate.from_messages(
     [
         ("system", "You are a helpful assistant."),
-        ("human", "{question}"),
+        ("human","{question}")
     ]
 )
 
-
 # ============ 流式输出的 chatbot ============
 @chain
-def chatbot(values):
+def chatbot2(values):
     """
     这个函数用 yield 而不是 return
     所以它是一个生成器函数
@@ -51,6 +50,7 @@ def chatbot(values):
 
 # ============ 使用流式输出 ============
 # chatbot.stream() 返回生成器，用 for 循环逐个获取 token
-for part in chatbot.stream({"question": "Which model providers offer LLMs?"}):
-    # part 是 AIMessageChunk，包含一小段文本
-    print(part.content, end="")  # end="" 不换行，实现打字机效果
+
+for result in chatbot2.stream({"question": "Which model providers offer LLMs?"}):
+    # result 是 AIMessageChunk，包含一小段文本
+    print(result.content, end="")  # end="" 不换行，实现打字机效果

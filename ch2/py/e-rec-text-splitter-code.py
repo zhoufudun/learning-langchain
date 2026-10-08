@@ -25,15 +25,15 @@ from langchain_text_splitters import (
 )
 
 # ============ 准备代码文本 ============
-PYTHON_CODE = """ def hello_world(): print("Hello, World!") # Call the function hello_world() """
+PYTHON_CODE = """def hello_world(): print("Hello, World!") # Call the function hello_world() """
 
 # ============ 创建代码分割器 ============
 # from_language() 根据编程语言创建分割器
 # 它知道 Python 的函数定义、类定义等语法结构
-python_splitter = RecursiveCharacterTextSplitter.from_language(
+language = RecursiveCharacterTextSplitter.from_language(
     language=Language.PYTHON,  # 指定语言
-    chunk_size=50,             # 每块最大字符数
-    chunk_overlap=0            # 不重叠
+    chunk_size=50,  # 每块最大字符数
+    chunk_overlap=0  # 不重叠
 )
 
 # ============ 分割代码 ============
@@ -41,8 +41,9 @@ python_splitter = RecursiveCharacterTextSplitter.from_language(
 # 与 split_documents() 不同：
 #   - split_documents(): 输入是 Document 列表
 #   - create_documents(): 输入是字符串列表
-python_docs = python_splitter.create_documents([PYTHON_CODE])
+create_documents = language.create_documents([PYTHON_CODE])
 
 # ============ 查看结果 ============
-print(python_docs)
+for doc in create_documents:
+    print(doc)
 # 分割器会尽量在函数边界分割，而不是在函数中间切断
