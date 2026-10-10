@@ -91,7 +91,7 @@ llm_chain = prompt | llm
 
 # ============ 第五步：生成回答 ============
 # 把检索到的文档和问题传给 LLM
-result = llm_chain.invoke({"question": query, "context": query})
+result = llm_chain.invoke({"question": query, "context": docs})
 
 print("\n回答:", result.content)
 
@@ -102,7 +102,7 @@ print("="*50 + "\n")
 
 # ============ 封装成完整的 QA 链 ============
 @chain
-def query(queryQuestion: str):
+def chainQuery(queryQuestion: str):
     """
         完整的 RAG 流程封装
 
@@ -118,5 +118,5 @@ def query(queryQuestion: str):
     return answer
 
 # 使用封装后的 QA 链
-result = query.invoke(query)
+result = chainQuery.invoke(query)
 print("封装后的回答:", result.content)
