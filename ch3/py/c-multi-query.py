@@ -50,14 +50,13 @@ class BatchingZhipuEmbeddings(ZhipuAIEmbeddings):
 # ============ 准备知识库和检索器 ============
 connection = "postgresql+psycopg://langchain:langchain@localhost:6024/langchain"
 
-raw_documents = TextLoader('./test.txt', encoding='utf-8').load()
+raw_documents = TextLoader('../../test2.txt', encoding='utf-8').load()
 text_splitter = RecursiveCharacterTextSplitter(
     chunk_size=1000, chunk_overlap=200)
 documents = text_splitter.split_documents(raw_documents)
-
+# 用zhipu 生成查询的向量
 embeddings_model = BatchingZhipuEmbeddings(model="embedding-3")
-db = PGVector.from_documents(
-    documents, embeddings_model, connection=connection)
+db = PGVector.from_documents(documents, embeddings_model, connection=connection)
 
 # k=5 因为多查询会检索更多文档
 retriever = db.as_retriever(search_kwargs={"k": 5})
@@ -75,17 +74,30 @@ llm = ChatOpenAI(model="deepseek-v4-flash-0731")
 
 def parse_queries_output(message):
     """
-    解析 LLM 输出，按换行符分割成多个查询
+    解析 LLM 输出，按换行符分割成多个有效查询。
 
     【Python 语法】
     - split('\n'): 按换行符分割
+    - strip(): 去除字符串开头和结尾的空白字符
     - 返回字符串列表: ['查询1', '查询2', ...]
     """
-    return message.content.split('\n')
+    queries = []
+
+    # LLM 的输出中可能有空行；智谱 Embedding 不接受空字符串。
+    for line in message.content.split('\n'):
+        cleaned_query = line.strip()
+
+        # 只有非空查询才进入检索流程。
+        if cleaned_query:
+            queries.append(cleaned_query)
+
+    # 学习阶段打印出来，便于检查实际传给向量检索器的内容。
+    print("LLM 生成的查询:", queries)
+    return queries
 
 
-# 查询生成链
-query_gen = perspectives_prompt | llm | parse_queries_output
+# 多查询生成链
+multi_query_gen = perspectives_prompt | llm | parse_queries_output
 
 
 # ============ 去重函数 ============
@@ -99,13 +111,31 @@ def get_unique_union(document_lists):
           for doc in sublist         # 遍历子列表中的每个文档
     - 字典推导式用于去重（相同内容只保留一个）
     """
+
     # 用字典去重：key 是文档内容，value 是文档对象
-    deduped_docs = {
-        doc.page_content: doc
-        for sublist in document_lists
-        for doc in sublist
-    }
-    # 返回去重后的文档列表
+    # deduped_docs = {
+    #     doc.page_content: doc
+    #     for sublist in document_lists
+    #     for doc in sublist
+    # }
+
+    # Python 的 dict 类似 Java 的 Map：
+    # - key：doc.page_content，即文档正文
+    # - value：doc，即完整的 Document 对象
+    # 相同 key 再次赋值时会覆盖旧 value，因此能自动去重。
+    deduped_docs = {}
+
+    # document_lists 类似：[[文档A, 文档B], [文档A, 文档C]]。
+    # 外层循环依次取每个查询对应的一组检索结果。
+    for doc_list in document_lists:
+        # 内层循环依次取这一组结果中的每篇文档。
+        for doc in doc_list:
+            # 类似 Java：dedupedDocs.put(doc.getPageContent(), doc)
+            # 第二次遇到文档A时，key 相同，只会覆盖原来的文档A。
+            deduped_docs[doc.page_content] = doc
+
+    # dict.values() 获取 Map 中全部 Document；list() 转为普通列表。
+    # 最终结果类似：[文档A, 文档B, 文档C]。
     return list(deduped_docs.values())
 
 
@@ -113,7 +143,7 @@ def get_unique_union(document_lists):
 # 1. query_gen: 生成多个查询
 # 2. retriever.batch: 批量检索（每个查询都检索）
 # 3. get_unique_union: 合并去重
-retrieval_chain = query_gen | retriever.batch | get_unique_union
+retrieval_chain = multi_query_gen | retriever.batch | get_unique_union
 
 # ============ QA 链 ============
 prompt = ChatPromptTemplate.from_template(
@@ -122,21 +152,17 @@ prompt = ChatPromptTemplate.from_template(
 
 query = "Who are the key figures in the ancient greek history of philosophy?"
 
-
 @chain
-def multi_query_qa(input):
-    """多查询 QA"""
+def multi_query_qb(input: str):
     # 使用多查询检索
-    docs = retrieval_chain.invoke(input)
-    print(f"检索到 {len(docs)} 个文档（去重后）")
+    docsList = retrieval_chain.invoke(input)
+    print(f"检索到 {len(docsList)} 个文档（去重后）")
 
+    chain = prompt | llm
     # 生成回答
-    formatted = prompt.invoke({"context": docs, "question": input})
-    answer = llm.invoke(formatted)
-    return answer
-
+    return chain.invoke({"context": docsList, "question": input})
 
 # 运行
 print("运行多查询 QA\n")
-result = multi_query_qa.invoke(query)
+result = multi_query_qb.invoke(query)
 print(result.content)
