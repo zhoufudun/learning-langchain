@@ -3,7 +3,21 @@ load_dotenv()
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import WebBaseLoader
 from langchain_community.vectorstores import InMemoryVectorStore
-from langchain_openai import OpenAIEmbeddings
+# DeepSeek 没有 Embedding API，改用智谱 AI
+from langchain_community.embeddings import ZhipuAIEmbeddings
+
+
+# ============ 分批嵌入的包装类 ============
+class BatchingZhipuEmbeddings(ZhipuAIEmbeddings):
+    """智谱嵌入，自动分批（单批最多 64 条）"""
+    batch_size: int = 64
+
+    def embed_documents(self, texts):
+        all_embeddings = []
+        for i in range(0, len(texts), self.batch_size):
+            batch = texts[i:i + self.batch_size]
+            all_embeddings.extend(super().embed_documents(batch))
+        return all_embeddings
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
 from langchain_openai import ChatOpenAI
@@ -28,7 +42,7 @@ doc_splits = text_splitter.split_documents(docs_list)
 # Add to vectorDB
 vectorstore = InMemoryVectorStore.from_documents(
     documents=doc_splits,
-    embedding=OpenAIEmbeddings(),
+    embedding=BatchingZhipuEmbeddings(model="embedding-3"),
 )
 retriever = vectorstore.as_retriever()
 

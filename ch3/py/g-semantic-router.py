@@ -28,7 +28,7 @@ from langchain.utils.math import cosine_similarity  # 计算余弦相似度
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import PromptTemplate
 from langchain_core.runnables import chain
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_openai import ChatOpenAI
 
 # ============ 定义专家提示词 ============
 # 物理专家模板
@@ -38,7 +38,7 @@ physics_template = """You are a very smart physics professor. You are great at  
 math_template = """You are a very good mathematician. You are great at answering     math questions. You are so good because you are able to break down hard     problems into their component parts, answer the component parts, and then     put them together to answer the broader question. Here is a question: {query}"""
 
 # ============ 预计算模板向量 ============
-embeddings = OpenAIEmbeddings()
+embeddings = BatchingZhipuEmbeddings(model="embedding-3")
 prompt_templates = [physics_template, math_template]
 
 # 把两个模板都转换成向量

@@ -24,12 +24,26 @@ Ch3-a: 基础 RAG（检索增强生成）
 
 # ============ 导入 ============
 from langchain_community.document_loaders import TextLoader
-from langchain_openai import OpenAIEmbeddings
+# DeepSeek 没有 Embedding API，改用智谱 AI
+from langchain_community.embeddings import ZhipuAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_postgres.vectorstores import PGVector
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import chain
+
+
+# ============ 分批嵌入的包装类 ============
+class BatchingZhipuEmbeddings(ZhipuAIEmbeddings):
+    """智谱嵌入，自动分批（单批最多 64 条）"""
+    batch_size: int = 64
+
+    def embed_documents(self, texts):
+        all_embeddings = []
+        for i in range(0, len(texts), self.batch_size):
+            batch = texts[i:i + self.batch_size]
+            all_embeddings.extend(super().embed_documents(batch))
+        return all_embeddings
 
 # ============ 配置 ============
 connection = "postgresql+psycopg://langchain:langchain@localhost:6024/langchain"
@@ -44,7 +58,7 @@ text_splitter = RecursiveCharacterTextSplitter(
 documents = text_splitter.split_documents(raw_documents)
 
 # 创建向量库
-embeddings_model = OpenAIEmbeddings()
+embeddings_model = BatchingZhipuEmbeddings(model="embedding-3")
 db = PGVector.from_documents(
     documents, embeddings_model, connection=connection)
 

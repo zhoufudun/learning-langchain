@@ -28,12 +28,12 @@ from typing import Annotated, Literal, TypedDict
 from langchain_core.documents import Document
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.vectorstores.in_memory import InMemoryVectorStore
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_openai import ChatOpenAI
 from langgraph.graph import END, START, StateGraph
 from langgraph.graph.message import add_messages
 
 # ============ 准备模型和嵌入 ============
-embeddings = OpenAIEmbeddings()
+embeddings = BatchingZhipuEmbeddings(model="embedding-3")
 model_low_temp = ChatOpenAI(temperature=0.1)   # 用于路由决策
 model_high_temp = ChatOpenAI(temperature=0.7)  # 用于生成回答
 

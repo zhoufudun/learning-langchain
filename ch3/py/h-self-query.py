@@ -30,7 +30,21 @@ pip install lark
 from langchain.chains.query_constructor.base import AttributeInfo
 from langchain.retrievers.self_query.base import SelfQueryRetriever
 from langchain_openai import ChatOpenAI
-from langchain_openai import OpenAIEmbeddings
+# DeepSeek 没有 Embedding API，改用智谱 AI
+from langchain_community.embeddings import ZhipuAIEmbeddings
+
+
+# ============ 分批嵌入的包装类 ============
+class BatchingZhipuEmbeddings(ZhipuAIEmbeddings):
+    """智谱嵌入，自动分批（单批最多 64 条）"""
+    batch_size: int = 64
+
+    def embed_documents(self, texts):
+        all_embeddings = []
+        for i in range(0, len(texts), self.batch_size):
+            batch = texts[i:i + self.batch_size]
+            all_embeddings.extend(super().embed_documents(batch))
+        return all_embeddings
 from langchain_postgres.vectorstores import PGVector
 from langchain_core.documents import Document
 
@@ -71,7 +85,7 @@ docs = [
 ]
 
 # 创建向量库
-embeddings_model = OpenAIEmbeddings()
+embeddings_model = BatchingZhipuEmbeddings(model="embedding-3")
 vectorstore = PGVector.from_documents(
     docs, embeddings_model, connection=connection)
 

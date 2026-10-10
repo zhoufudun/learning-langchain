@@ -39,7 +39,7 @@ from langchain_core.documents import Document
 from langchain_core.messages import HumanMessage
 from langchain_core.tools import tool
 from langchain_core.vectorstores.in_memory import InMemoryVectorStore
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_openai import ChatOpenAI
 
 from langgraph.graph import START, StateGraph
 from langgraph.graph.message import add_messages
@@ -57,7 +57,7 @@ search = DuckDuckGoSearchRun()
 tools = [search, calculator]
 
 # ============ 创建工具描述的向量库 ============
-embeddings = OpenAIEmbeddings()
+embeddings = BatchingZhipuEmbeddings(model="embedding-3")
 model = ChatOpenAI(temperature=0.1)
 
 # 把每个工具的描述存成文档
