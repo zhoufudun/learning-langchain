@@ -82,14 +82,11 @@ def qa(input):
 
 
 result = qa.invoke(query)
-print("
-不重写的回答:", result.content)
+print("\n不重写的回答:", result.content)
 
-print("
-" + "="*50)
+print("\n" + "="*50)
 print("使用查询重写")
-print("="*50 + "
-")
+print("="*50 + "\n")
 
 # ============ 查询重写 ============
 # 重写提示词：让 LLM 提取核心问题

@@ -49,7 +49,7 @@ print("=" * 50)
 print("方案 A：用提示词返回 JSON（DeepSeek 可用）")
 print("=" * 50)
 
-llm = ChatOpenAI(model="deepseek-chat", temperature=0)
+llm = ChatOpenAI(model="deepseek-v4-flash-0731", temperature=0)
 
 # 提示词：明确告诉 LLM 返回 JSON 格式
 prompt = ChatPromptTemplate.from_messages([
@@ -131,7 +131,7 @@ except Exception as e:
 #
 # # 注意：这里不设置 base_url，使用 OpenAI 官方 API
 # openai_llm = ChatOpenAI(
-#     model="gpt-3.5-turbo",
+#     model="deepseek-v4-flash-0731",
 #     temperature=0,
 #     # 如果你的 OPENAI_API_KEY 指向 DeepSeek，需要另外设置
 #     # api_key="你的 OpenAI API key",

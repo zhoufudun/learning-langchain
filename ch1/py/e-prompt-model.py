@@ -34,7 +34,7 @@ Question: {question}
 Answer: """)
 
 # 模型：指定使用哪个 LLM
-model = ChatOpenAI(model="deepseek-chat")
+model = ChatOpenAI(model="deepseek-v4-flash-0731")
 
 # ============ 单次使用 ============
 # 下面是使用模板和模型的一次调用

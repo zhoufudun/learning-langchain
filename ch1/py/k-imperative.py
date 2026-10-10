@@ -36,7 +36,7 @@ template = ChatPromptTemplate.from_messages(
 chat_prompt_template = ChatPromptTemplate.from_messages([("system", "你是一个ai助手"), ("human", "{question}")])
 
 # 模型
-model = ChatOpenAI(model="deepseek-chat")
+model = ChatOpenAI(model="deepseek-v4-flash-0731")
 
 
 # ============ 用 @chain 定义流程 ============

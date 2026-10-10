@@ -121,6 +121,5 @@ graph = builder.compile()
 result = graph.invoke({"user_query": "What is the total sales for each product?"})
 print("SQL 查询:")
 print(result["sql_query"])
-print("
-SQL 解释:")
+print("\nSQL 解释:")
 print(result["sql_explanation"])

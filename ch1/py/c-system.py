@@ -22,7 +22,7 @@ from langchain_core.messages import SystemMessage, HumanMessage
 from langchain_openai.chat_models import ChatOpenAI
 
 # ============ 创建模型 ============
-model = ChatOpenAI(model="deepseek-chat")
+model = ChatOpenAI(model="deepseek-v4-flash-0731")
 
 # ============ 创建消息 ============
 # SystemMessage: 告诉 AI 它是什么角色、应该怎么回答

@@ -43,7 +43,7 @@ print("数据库表:", db.get_usable_table_names())
 # 输出: ['Album', 'Artist', 'Customer', 'Employee', 'Genre', 'Invoice', ...]
 
 # ============ 创建 SQL 生成链 ============
-llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
+llm = ChatOpenAI(model="deepseek-v4-flash-0731", temperature=0)
 
 # create_sql_query_chain() 创建一个链:
 # 输入: 自然语言问题

@@ -25,7 +25,7 @@ from langchain_core.messages import HumanMessage
 
 # ============ 创建模型 ============
 # 不指定 model 参数时，默认使用 gpt-3.5-turbo
-model = ChatOpenAI(model="deepseek-chat")
+model = ChatOpenAI(model="deepseek-v4-flash-0731")
 
 # ============ 创建消息列表 ============
 # HumanMessage("问题") - 创建一个用户消息对象

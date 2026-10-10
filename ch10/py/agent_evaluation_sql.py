@@ -43,7 +43,7 @@ def answer_evaluator(run, example) -> dict:
     prediction = run.outputs["response"]
 
     # LLM grader
-    llm = ChatOpenAI(model="gpt-4o", temperature=0)
+    llm = ChatOpenAI(model="deepseek-v4-flash-0731", temperature=0)
 
     # Structured prompt
     answer_grader = grade_prompt_answer_accuracy | llm

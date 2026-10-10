@@ -21,7 +21,7 @@ print(db.dialect)
 print(db.get_usable_table_names())
 db.run("SELECT * FROM Artist LIMIT 10;")
 # gpt4o
-llm = ChatOpenAI(model="gpt-4o", temperature=0)
+llm = ChatOpenAI(model="deepseek-v4-flash-0731", temperature=0)
 experiment_prefix = "sql-agent-gpt4o"
 metadata = "Chinook, gpt-4o agent"
 # SQL toolkit
@@ -109,8 +109,7 @@ def handle_tool_error(state) -> dict:
     return {
         "messages": [
             ToolMessage(
-                content=f"Error: {repr(error)}
- please fix your mistakes.",
+                content=f"Error: {repr(error)}\n please fix your mistakes.",
                 tool_call_id=tc["id"],
             )
             for tc in tool_calls

@@ -30,10 +30,7 @@ re_write_prompt = ChatPromptTemplate.from_messages(
         ("system", system),
         (
             "human",
-            "Here is the initial question: 
-
- {question} 
- Formulate an improved question.",
+            "Here is the initial question: \n\n {question} \n Formulate an improved question.",
         ),
     ]
 )
@@ -165,8 +162,7 @@ def web_search(state):
 
     # Web search
     docs = web_search_tool.invoke({"query": question})
-    web_results = "
-".join([d["content"] for d in docs])
+    web_results = "\n".join([d["content"] for d in docs])
     web_results = Document(page_content=web_results)
     documents.append(web_results)
 

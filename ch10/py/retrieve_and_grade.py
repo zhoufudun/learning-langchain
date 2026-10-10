@@ -50,8 +50,7 @@ retriever = vectorstore.as_retriever()
 results = retriever.invoke(
     "What are 2 LangGraph agents used in production in 2024?")
 
-print("Results: 
-", results)
+print("Results: \n", results)
 
 
 # --- Create a grader for retrieved documents ---
@@ -78,11 +77,7 @@ grade_prompt = ChatPromptTemplate.from_messages(
     [
         ("system", system),
         ("human",
-         "Retrieved document: 
-
- {document} 
-
- User question: {question}"),
+         "Retrieved document: \n\n {document} \n\n User question: {question}"),
     ]
 )
 
@@ -99,7 +94,4 @@ doc_txt = docs[0].page_content
 
 result = retrieval_grader.invoke({"question": question, "document": doc_txt})
 
-print("
-
-Grade Result: 
-", result)
+print("\nGrade Result: \n", result)

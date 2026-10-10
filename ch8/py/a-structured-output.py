@@ -34,7 +34,7 @@ class Joke(BaseModel):
 
 
 # ============ 创建结构化输出的模型 ============
-model = ChatOpenAI(model="gpt-4o", temperature=0)
+model = ChatOpenAI(model="deepseek-v4-flash-0731", temperature=0)
 
 # with_structured_output() 让模型返回 Joke 对象
 model = model.with_structured_output(Joke)

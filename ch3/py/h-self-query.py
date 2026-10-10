@@ -118,7 +118,7 @@ fields = [
 description = "Brief summary of a movie"
 
 # ============ 创建自查询检索器 ============
-llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
+llm = ChatOpenAI(model="deepseek-v4-flash-0731", temperature=0)
 
 # from_llm() 创建自查询检索器
 # LLM 会自动从用户查询中提取过滤条件

@@ -87,7 +87,7 @@ prompt = ChatPromptTemplate.from_template(
     """Answer the question based only on the following context: {context} Question: {question} """
 )
 
-llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
+llm = ChatOpenAI(model="deepseek-v4-flash-0731", temperature=0)
 
 
 @chain
@@ -109,6 +109,5 @@ def qa(input):
 
 print("运行 HyDE")
 result = qa.invoke(query)
-print("
-回答:")
+print("\n回答:")
 print(result.content)

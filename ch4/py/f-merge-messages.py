@@ -57,11 +57,9 @@ print(f"合并前消息数: {len(messages)}")
 merged = merge_message_runs(messages)
 print(f"合并后消息数: {len(merged)}")  # 6 → 3
 
-print("
-合并后的消息:")
+print("\n合并后的消息:")
 for msg in merged:
-    print(f"
-{msg.__class__.__name__}:")
+    print(f"\n{msg.__class__.__name__}:")
     print(f"  {msg.content}")
 
 # 输出:

@@ -48,7 +48,7 @@ class RouteQuery(BaseModel):
 
 
 # ============ 创建结构化输出的 LLM ============
-llm = ChatOpenAI(model="gpt-4o", temperature=0)
+llm = ChatOpenAI(model="deepseek-v4-flash-0731", temperature=0)
 
 # with_structured_output() 让 LLM 返回 RouteQuery 对象
 # LLM 会自动解析回答并填充 datasource 字段

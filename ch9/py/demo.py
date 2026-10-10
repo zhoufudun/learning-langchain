@@ -37,8 +37,7 @@ async def invoke_retrieval_assistant():
             # Process and print each event
             print(f"Receiving event of type: {event.event}")
             print(event.data)
-            print("
-")
+            print("\n")
 
     except Exception as e:
         print(f"An error occurred: {e}")

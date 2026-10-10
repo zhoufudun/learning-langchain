@@ -83,6 +83,5 @@ semantic_router = prompt_router | ChatOpenAI() | StrOutputParser()
 
 # ============ 测试 ============
 result = semantic_router.invoke("What's a black hole")
-print("
-语义路由结果:", result)
+print("\n语义路由结果:", result)
 # 会自动选择 physics_template，因为"黑洞"和物理模板更相似

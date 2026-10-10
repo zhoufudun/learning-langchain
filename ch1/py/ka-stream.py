@@ -25,7 +25,7 @@ from langchain_openai.chat_models import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 
 # ============ 准备组件 ============
-model = ChatOpenAI(model="deepseek-chat")
+model = ChatOpenAI(model="deepseek-v4-flash-0731")
 
 template = ChatPromptTemplate.from_messages(
     [

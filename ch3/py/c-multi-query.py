@@ -70,7 +70,7 @@ perspectives_prompt = ChatPromptTemplate.from_template(
     Provide these alternative questions separated by newlines.
     Original question: {question}""")
 
-llm = ChatOpenAI(model="gpt-3.5-turbo")
+llm = ChatOpenAI(model="deepseek-v4-flash-0731")
 
 
 def parse_queries_output(message):
@@ -81,8 +81,7 @@ def parse_queries_output(message):
     - split('\n'): 按换行符分割
     - 返回字符串列表: ['查询1', '查询2', ...]
     """
-    return message.content.split('
-')
+    return message.content.split('\n')
 
 
 # 查询生成链
@@ -138,7 +137,6 @@ def multi_query_qa(input):
 
 
 # 运行
-print("运行多查询 QA
-")
+print("运行多查询 QA\n")
 result = multi_query_qa.invoke(query)
 print(result.content)

@@ -34,7 +34,7 @@ from langchain_openai.chat_models import ChatOpenAI
 messages = ChatPromptTemplate.from_messages([("system", "You are a helpful assistant."), ("human", "{question}"), ])
 
 # 模型
-model = ChatOpenAI(model="deepseek-chat")
+model = ChatOpenAI(model="deepseek-v4-flash-0731")
 
 # ============ 用 | 连接组件 ============
 # 这一行是 LangChain 的核心！

@@ -28,7 +28,7 @@ template = ChatPromptTemplate.from_messages(
 )
 
 # 模型
-model = ChatOpenAI(model="deepseek-chat")
+model = ChatOpenAI(model="deepseek-v4-flash-0731")
 
 # ============ 单次调用 ============
 

@@ -26,9 +26,9 @@ load_dotenv()  # 执行加载，之后代码就能读取 .env 里的变量了
 from langchain_openai.chat_models import ChatOpenAI
 
 # ============ 创建模型对象 ============
-# model="deepseek-chat" 指定使用 DeepSeek 的模型
+# model="deepseek-v4-flash-0731" 指定使用 DeepSeek 的模型
 # API key 和 base_url 会从环境变量自动读取（OPENAI_API_KEY, OPENAI_API_BASE）
-model = ChatOpenAI(model="deepseek-chat")
+model = ChatOpenAI(model="deepseek-v4-flash-0731")
 
 # ============ 调用模型 ============
 # invoke("问题") 是最基础的调用方式

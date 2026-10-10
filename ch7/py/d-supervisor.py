@@ -46,7 +46,7 @@ class SupervisorDecision(BaseModel):
 
 
 # ============ 创建模型 ============
-model = ChatOpenAI(model="gpt-4", temperature=0)
+model = ChatOpenAI(model="deepseek-v4-flash-0731", temperature=0)
 # with_structured_output 让模型返回 SupervisorDecision 对象
 model = model.with_structured_output(SupervisorDecision)
 
@@ -158,7 +158,6 @@ print("任务: 分析数据并创建可视化")
 print()
 
 for output in graph.stream(initial_state):
-    print(f"
-决策: {output.get('next', 'N/A')}")
+    print(f"\n决策: {output.get('next', 'N/A')}")
     if output.get("messages"):
         print(f"回复: {output['messages'][-1].content[:100]}...")

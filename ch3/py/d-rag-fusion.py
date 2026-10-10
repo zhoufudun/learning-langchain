@@ -70,11 +70,10 @@ prompt_rag_fusion = ChatPromptTemplate.from_template(
 
 
 def parse_queries_output(message):
-    return message.content.split('
-')
+    return message.content.split('\n')
 
 
-llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
+llm = ChatOpenAI(model="deepseek-v4-flash-0731", temperature=0)
 query_gen = prompt_rag_fusion | llm | parse_queries_output
 
 # 测试查询生成
@@ -135,8 +134,7 @@ def reciprocal_rank_fusion(results: list[list], k=60):
 retrieval_chain = query_gen | retriever.batch | reciprocal_rank_fusion
 
 result = retrieval_chain.invoke(query)
-print("
-融合排序后的第一个文档:")
+print("\n融合排序后的第一个文档:")
 print(result[0].page_content[:200] + "...")
 
 # ============ RAG Fusion QA ============
@@ -156,7 +154,6 @@ def rag_fusion(input):
     return answer
 
 
-print("
-运行 RAG Fusion")
+print("\n运行 RAG Fusion")
 result = rag_fusion.invoke(query)
 print(result.content)

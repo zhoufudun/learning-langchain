@@ -17,7 +17,7 @@ load_dotenv()
 # ============ 导入 ============
 from langchain_openai.chat_models import ChatOpenAI
 
-model = ChatOpenAI(model="deepseek-chat")
+model = ChatOpenAI(model="deepseek-v4-flash-0731")
 
 # ============ 方式一：invoke() 单个调用 ============
 # 最常用，传入一个问题，等待完整回答

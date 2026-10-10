@@ -51,7 +51,7 @@ print(f"原始消息数: {len(messages)}")
 trimmer = trim_messages(
     max_tokens=65,                       # 最多保留 65 个 token
     strategy="last",                     # 保留最后的消息（最近的对话）
-    token_counter=ChatOpenAI(model="gpt-4o"),  # 用这个模型计算 token
+    token_counter=ChatOpenAI(model="deepseek-v4-flash-0731"),  # 用这个模型计算 token
     include_system=True,                 # 保留系统消息（重要！）
     allow_partial=False,                 # 不允许截断单条消息
     start_on="human",                    # 保留的消息从 human 开始
@@ -60,8 +60,7 @@ trimmer = trim_messages(
 # ============ 应用裁剪 ============
 trimmed = trimmer.invoke(messages)
 print(f"裁剪后消息数: {len(trimmed)}")
-print("
-裁剪后的消息:")
+print("\n裁剪后的消息:")
 for msg in trimmed:
     print(f"  {msg.__class__.__name__}: {msg.content}")
 
