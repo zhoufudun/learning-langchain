@@ -26,7 +26,12 @@ HyDE = Hypothetical Document Embeddings
 from langchain_community.document_loaders import TextLoader
 # DeepSeek 没有 Embedding API，改用智谱 AI
 from langchain_community.embeddings import ZhipuAIEmbeddings
-
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_postgres.vectorstores import PGVector
+from langchain_openai import ChatOpenAI
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.runnables import chain
+from langchain_core.output_parsers import StrOutputParser
 
 # ============ 分批嵌入的包装类 ============
 class BatchingZhipuEmbeddings(ZhipuAIEmbeddings):
@@ -39,24 +44,25 @@ class BatchingZhipuEmbeddings(ZhipuAIEmbeddings):
             batch = texts[i:i + self.batch_size]
             all_embeddings.extend(super().embed_documents(batch))
         return all_embeddings
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_postgres.vectorstores import PGVector
-from langchain_openai import ChatOpenAI
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.runnables import chain
-from langchain_core.output_parsers import StrOutputParser
 
 # ============ 准备知识库和检索器 ============
 connection = "postgresql+psycopg://langchain:langchain@localhost:6024/langchain"
 
-raw_documents = TextLoader('./test.txt', encoding='utf-8').load()
+raw_documents = TextLoader('../../test.txt', encoding='utf-8').load()
+
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=1000, chunk_overlap=200)
+    chunk_size=1000,
+    chunk_overlap=200
+)
 documents = text_splitter.split_documents(raw_documents)
 
 embeddings_model = BatchingZhipuEmbeddings(model="embedding-3")
+
 db = PGVector.from_documents(
-    documents, embeddings_model, connection=connection)
+    documents,
+    embeddings_model,
+    connection=connection
+)
 
 retriever = db.as_retriever(search_kwargs={"k": 5})
 
@@ -69,16 +75,12 @@ prompt_hyde = ChatPromptTemplate.from_template(
 
 # 假设文档生成链
 # StrOutputParser() 把 AIMessage 转换成纯字符串
-generate_doc = (
-    prompt_hyde
-    | ChatOpenAI(temperature=0)
-    | StrOutputParser()
-)
+generate_doc = (prompt_hyde|ChatOpenAI(model="deepseek-v4-flash-0731", temperature=0)|StrOutputParser())
 
 # ============ HyDE 检索链 ============
 # 1. 生成假设文档
 # 2. 用假设文档去检索（不是用原问题）
-retrieval_chain = generate_doc | retriever
+mock_retrieval_chain = generate_doc | retriever
 
 # ============ 完整 QA 链 ============
 query = "Who are some lesser known philosophers in the ancient greek history of philosophy?"
@@ -98,7 +100,7 @@ def qa(input):
     2. 用检索到的真实文档回答问题
     """
     # 获取检索结果（内部会先生成假设文档）
-    docs = retrieval_chain.invoke(input)
+    docs = mock_retrieval_chain.invoke(input)
     print(f"检索到 {len(docs)} 个文档")
 
     # 用真实文档生成回答

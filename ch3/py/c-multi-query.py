@@ -80,6 +80,11 @@ def parse_queries_output(message):
     - split('\n'): 按换行符分割
     - strip(): 去除字符串开头和结尾的空白字符
     - 返回字符串列表: ['查询1', '查询2', ...]
+
+    【为什么要过滤空行】
+    LLM 返回的多条查询之间可能有空行。split('\n') 后，空行会变成空字符串 ""。
+    后续 retriever.batch() 会把每一项都交给智谱 Embedding；智谱不接受空字符串，
+    会返回 400 / 1210（API 调用参数有误）。因此只保留清理后仍有内容的查询。
     """
     queries = []
 
@@ -87,11 +92,11 @@ def parse_queries_output(message):
     for line in message.content.split('\n'):
         cleaned_query = line.strip()
 
-        # 只有非空查询才进入检索流程。
+        # 只有非空查询才进入检索流程，避免把 "" 传给智谱 API。
         if cleaned_query:
             queries.append(cleaned_query)
 
-    # 学习阶段打印出来，便于检查实际传给向量检索器的内容。
+    # 学习阶段打印出来，便于检查实际传给向量检索器和智谱 Embedding 的内容。
     print("LLM 生成的查询:", queries)
     return queries
 
