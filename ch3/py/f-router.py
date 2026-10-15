@@ -64,14 +64,20 @@ class RouteQuery(BaseModel):
     )
 
 # ============ 创建结构化输出的 LLM ============
-llm = ChatOpenAI(model="claude-sonnet-4-6", temperature=0)
+llm = ChatOpenAI(model="gpt-5.6-luna", temperature=0)
 
 # with_structured_output() 让 LLM 返回 RouteQuery 对象
 # LLM 会自动解析回答并填充 datasource 字段
-structured_output = llm.with_structured_output(RouteQuery)
+structured_output = llm.with_structured_output(RouteQuery) # 有些模型不支持结构话返回
 
 # ============ 路由提示词 ============
-system = """You are an expert at routing a user question to the appropriate data source. Based on the programming language the question is referring to, route it to the relevant data source."""
+system = """You route a user question to the appropriate data source.
+
+Choose exactly one value:
+- python_docs: for Python questions
+- js_docs: for JavaScript questions
+
+Reply with only python_docs or js_docs. Do not explain your choice."""
 
 prompt = ChatPromptTemplate.from_messages([("system", system), ("human", "{question}")])
 
